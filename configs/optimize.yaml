@@ -1,0 +1,56 @@
+logger:
+  level: DEBUG
+
+global:
+  random.seed: 1
+  gpu.id: 1
+
+training:
+  log.results: "../data/training.log"
+
+  optimize.parameters: True  # If this is set to True, the optimizer overrides the values for the model parameters
+  optimize.num.trails: 50
+  optimize.save.history: ../trails.today.json
+
+  negative.samples.per.entity: 50
+  null.per.dataset: -1
+
+evaluation:
+
+
+dataset:
+  type: WebQSPDataset
+  path_to_dataset: "../data/WebQSP/preprocessed/webqsp.train.entities.json"
+  precomputed_candidates: "../data/WebQSP/preprocessed/webqsp.train.entities.candidates.4.onlydev.pkl"
+  subsample: 1.0
+  debug_mode: True
+
+entity.linking:  # These parameters are used to instantiate an entity linker
+  candidates.to.retrieve: 50
+  max.match.diff: 2
+
+  linker: MLLinker
+  linker.options:
+    max_mention_len: 4
+    num_candidates: 1
+    prefer_longer_matches: True
+    no_mentions_overlap: True
+    caseless_mode: True
+    mention_context_size: 2
+
+model:  # If an entity linker features a trained model, these parameters are used to instantiate it
+  models.save.path: "../trainedmodels/"
+  word.embeddings: "../../resources/glove/glove.6B.50d.txt"
+  kb.embeddings: "../data/WikidataEmb/dec_17_50/"
+  epochs: 200
+  model.checkpoint: False
+
+  monitor: "d_f1"
+  early.stopping: 10
+  evaluate.on.dataset.after: 10
+
+wikidata:
+  backend: "http://knowledgebase:8890/sparql"
+  timeout: 20
+  filter.out.relation.classes: "rq"
+  

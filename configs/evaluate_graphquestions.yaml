@@ -1,0 +1,43 @@
+logger:
+  level: INFO
+
+global:
+  random.seed: 1
+  gpu.id: 2
+
+training:
+  log.results: "data/training.log"
+
+  optimize.parameters: False  # If this is set to True, the optimizer overrides the values for the model parameters
+  optimize.num.trails: 3
+  optimize.save.history: trails.today.json
+  subsample: 1.0
+
+evaluation:
+  fb: False
+
+
+dataset:
+  type: WebQSPDataset
+  path_to_dataset: "data/GraphQuestions/graph.test.entities.json"
+  subsample: 1.0
+
+entity.linking:  # These parameters are used to instantiate an entity linker
+  candidates.to.retrieve: 50
+  max.match.diff: 2
+
+  linker: MLLinker
+  linker.options:
+    precomputed_candidates: "data/GraphQuestions/graph.test.entities.candidates.json"
+    max_mention_len: 4
+    num_candidates: 1
+    prefer_longer_matches: True
+    no_mentions_overlap: True
+    caseless_mode: True
+    mention_context_size: 2
+
+wikidata:
+  backend: "http://knowledgebase:8890/sparql"
+  timeout: 20
+  filter.out.relation.classes: "rq"
+  

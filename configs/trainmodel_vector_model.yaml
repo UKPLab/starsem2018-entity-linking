@@ -1,0 +1,85 @@
+logger:
+  level: INFO
+
+global:
+  random.seed: 1
+  gpu.id: 1
+
+training:
+  log.results: "data/training.log"
+
+  optimize.parameters: False  # If this is set to True, the optimizer overrides the values for the model parameters
+  optimize.num.trails: 3
+  optimize.save.history: trails.today.json
+
+  negative.samples.per.entity: -1
+  null.per.dataset: -1
+
+  train.on.full: False
+
+evaluation:
+
+
+dataset:
+  type: WebQSPDataset
+  path_to_dataset: "data/WebQSP/preprocessed/webqsp.train.entities.json"
+  subsample: 1.0
+  debug_mode: False
+
+entity.linking:  # These parameters are used to instantiate an entity linker
+  candidates.to.retrieve: -1
+  max.match.diff: 2
+
+  linker: MLLinker
+  linker.options:
+    precomputed_candidates: "data/WebQSP/preprocessed/webqsp.train.entities.candidates.4.small.pkl"
+    max_mention_len: 4
+    num_candidates: 1
+    prefer_longer_matches: True
+    no_mentions_overlap: True
+    caseless_mode: True
+    mention_context_size: 2
+
+model:
+  models.save.path: "trainedmodels/"
+  word.embeddings: "../resources/embeddings/glove/glove.6B.50d.txt"
+  kb.embeddings: "data/WikidataEmb/dec_17_50/"
+  epochs: 100
+  model.checkpoint: True
+  evaluate.on.dataset.after: 20
+
+  negative.class.weight: 0.43
+  negative.weight.scale.type: smooth
+  negative.weight.epoch: 14
+
+  monitor: d_f1
+  early.stopping: 10
+
+  sem.layer.size: 128
+  neg.layer.size: 16
+
+  enc.activation: relu
+  enc.pooling: max
+  dropout: 0.15
+
+  poss.emb.size: 3
+
+  word.conv.size: 32
+  word.conv.width: 3
+  word.conv.depth: 1
+  word.repeat.convs: 3
+
+  char.emb.size: 50
+  char.conv.size: 32
+  char.conv.width: 3
+  char.conv.depth: 1
+  char.repeat.convs: 3
+
+  entity.layer.size: 75
+  relation.layer.size: 75
+
+wikidata:
+  backend: "http://knowledgebase:8890/sparql"
+  timeout: 20
+  filter.out.relation.classes: "rq"
+  
