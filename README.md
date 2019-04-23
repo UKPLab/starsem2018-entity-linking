@@ -117,6 +117,7 @@ print(output.entities)
 
 1. Download and install the pre-trained models as described above.
 2. Download the pre-processed data sets for evaluating entity linkers on QA data [here](https://public.ukp.informatik.tu-darmstadt.de/starsem18-entity-linking/EntityLinkingForQADatasets.zip).
+3. If you use the given config files and the precomputed candidates for the train and the test set, you should not need the Wikidata local endpoint.
 2. See `run_experiments.sh`
 
 
