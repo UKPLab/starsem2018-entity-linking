@@ -2,7 +2,7 @@
 
 ## Entity linking with the Wikidata knowledge base
 
-This is an accompanying repository for our ***SEM 2018 paper** ([pre-print](http://arxiv.org/abs/1804.08460)). 
+This is an accompanying repository for our ***SEM 2018 paper** ([.pdf](https://www.aclweb.org/anthology/S18-2007)). 
 It contains the code to replicate the experiments and train the models described in the paper.
 
 > This repository contains experimental software and is published for the sole purpose of giving additional background details on the respective publication.
@@ -76,6 +76,12 @@ If you have any questions regarding the code, please, don't hesitate to contact 
 * PyTorch 0.3.0 - [read here about installation](http://pytorch.org/)
 * See `requirements.txt` for the full list of packages
 
+
+### QA data for benchmarking entity linking systems
+
+- Download the pre-processed data sets (WebQSP and GraphQuestions) for evaluating entity linkers on QA data with Wikidata: https://public.ukp.informatik.tu-darmstadt.de/starsem18-entity-linking/EntityLinkingForQADatasets.zip.
+- Read our [paper](https://www.aclweb.org/anthology/S18-2007) to learn the evaluation details.
+
 ### Installation:
 
 1. Download and install Anaconda (https://www.anaconda.com/)
@@ -83,11 +89,7 @@ If you have any questions regarding the code, please, don't hesitate to contact 
 3. Install PyTorch 0.3.1: `conda install pytorch=0.3.1 -c pytorch` (with CUDA if you want to use GPU)
 4. Install the rest of the dependencies from the `requirements.txt` with: `conda install --yes --file requirements.txt`. 
 5. Install `pycorenlp, SPARQLWrapper` with `pip install pycorenlp SPARQLWrapper`.
-6. Create a local copy of the Wikidata knowledge base in RDF format. We use the [Virtuoso Opensource Server](https://github.com/openlink/virtuoso-opensource). See [here](WikidataHowTo.md) for more info on the Wikidata installation. (This step takes a lot of time!). Right now this is the only way to run the models at test time, we are working to providing a smaller Wikidata dump just for the training/evaluation on the data sets.
-
-### Running the experiments from the paper:
-
-See `run_experiments.sh`
+6. Create a local copy of the Wikidata knowledge base in RDF format. We use the [Virtuoso Opensource Server](https://github.com/openlink/virtuoso-opensource) and wrote a guide on the installation [here](https://github.com/UKPLab/coling2018-graph-neural-networks-question-answering/blob/master/WikidataHowTo.md) (in a different repository). This step takes a lot of time!. Right now this is the only way to run the models at test time, we are working to providing a smaller Wikidata dump just for the training/evaluation on the data sets.
 
 ### Using the pre-trained model:
 
@@ -111,6 +113,11 @@ output = entitylinker.link_entities_in_raw_input("Barack Obama is a president.")
 print(output.entities)
 ```
 
+### Running the experiments from the paper:
+
+1. Download and install the pre-trained models as described above.
+2. Download the pre-processed data sets for evaluating entity linkers on QA data [here](https://public.ukp.informatik.tu-darmstadt.de/starsem18-entity-linking/EntityLinkingForQADatasets.zip).
+2. See `run_experiments.sh`
 
 
 ### License:

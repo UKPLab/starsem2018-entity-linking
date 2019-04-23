@@ -1,0 +1,38 @@
+logger:
+  level: INFO
+
+global:
+  random.seed: 1
+  gpu.id: 1
+
+training:
+
+evaluation:
+
+dataset:
+  type: WebQSPDataset
+  path_to_dataset: "data/graphquestions/input/graph.train.entities.json"
+  precomputed_candidates: "data/graphquestions/preprocessed/graph.train.entities.candidates.json"
+  subsample: 1.0
+
+entity.linking:  # These parameters are used to instantiate an entity linker
+  candidates.to.retrieve: 100
+  max.match.diff: 3
+
+  linker: BaseLinker
+  linker.options:
+    max_mention_len: 4
+    num_candidates: 100
+    prefer_longer_matches: False
+    no_mentions_overlap: False
+    caseless_mode: False
+    mention_context_size: 2
+
+model:  # If an entity linker features a trained model, these parameters are used to instantiate it
+  models.save.path: "trainedmodels/"
+
+wikidata:
+  backend: "http://knowledgebase:8890/sparql"
+  timeout: 20
+  filter.out.relation.classes: "rq"
+  

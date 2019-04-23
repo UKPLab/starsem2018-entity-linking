@@ -19,7 +19,7 @@ evaluation:
 
 dataset:
   type: WebQSPDataset
-  path_to_dataset: "data/WebQSP/preprocessed/webqsp.test.entities.with_classes.json"
+  path_to_dataset: "data/WebQSP/input/webqsp.test.entities.with_classes.json"
   subsample: 1.0
 
 entity.linking:  # These parameters are used to instantiate an entity linker
@@ -28,7 +28,7 @@ entity.linking:  # These parameters are used to instantiate an entity linker
 
   linker: MLLinker
   linker.options:
-    precomputed_candidates: "data/WebQSP/preprocessed/webqsp.test.entities.candidates.json"
+    #precomputed_candidates: "data/WebQSP/preprocessed/webqsp.test.entities.candidates.json"
     max_mention_len: 4
     num_candidates: 1
     prefer_longer_matches: True
