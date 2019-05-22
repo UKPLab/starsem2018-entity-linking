@@ -125,14 +125,14 @@ def get_tagged_from_server(input_text, caseless=False) -> Iterable:
     """
     if len(input_text.strip()) == 0:
         return []
-    input_text = remove_links(input_text)
+    # input_text = remove_links(input_text)
     input_text = _preprocess_corenlp_input(input_text)
     if caseless:
         input_text = input_text.lower()
     corenlp_output = corenlp.annotate(input_text,
                                       properties={**corenlp_properties, **corenlp_caseless} if caseless else corenlp_properties
                                       ).get("sentences", [])
-    tagged = [{k: t[k] for k in {"index", "word", "pos", "ner", "lemma", "characterOffsetBegin", "characterOffsetEnd"}}
+    tagged = [{k: t[k] for k in {"index", "pos", "ner", "lemma", "characterOffsetBegin", "characterOffsetEnd", "originalText"}}
               for sent in corenlp_output for t in sent['tokens']]
     return tagged
 
